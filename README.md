@@ -1,6 +1,10 @@
-# Project_1
+# Taidesivusto
+IDEA:
+- Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen
+- Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan omia taideteoksia sisältäviä julkaisuja
+- Käyttäjä näkee sovellukseen lisätyt julkaisut
+- Käyttäjä pystyy etsimään julkaisuja hakusanalla julkaisun teeman perusteella
+- Sovelluksessa on käyttäjäsivut, jotka näyttävät tilastoja ja käyttäjän lisäämät julkaisut
+- Käyttäjä pystyy valitsemaan julkaisulle yhden tai useamman luokittelun (esim. teema, johon taideteos liittyy ja taideteoksen tyyppi (maalaus, piirrustus...))
+- Käyttäjä pystyy jättämään kommentteja muiden julkaisuihin
 
-Idea: Taidesivusto, johon voi jakaa omia taideteoksia ja jättää muille kommentteja. Julkaisun tekeminen on pääasiallinen tietokohde ja kommentin jättäminen toissijainen.
-Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen. Voi vierailla omassa tai muiden profiileissa, mistä näkee käyttäjän jakamat taideteokset.
-Sovelluksessa on erilaisia teemoja / haasteita, joihin voi osallistua (näitä voi myös etsiä).
-Julkaisulle valitaan aina teema
