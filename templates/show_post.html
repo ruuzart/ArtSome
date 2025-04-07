@@ -1,6 +1,14 @@
 <html>
   <body>
+    {% if session.user_id == post.user_id %}
     <p>
+      <a href="/edit_post/{{ post.id }}">Muokkaa</a>
+    </p>
+    {% endif %}
+    <p>
+        <a href="/images/{{ post.id }}">Kuva</a>
+          Julkaisija: {{ post.user_id }}
+        </p>
       {{ post.descriptio }}
     </p>
     <p>

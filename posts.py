@@ -11,10 +11,15 @@ def get_posts():
 
 def get_post(post_id):
     sql = """
-        SELECT posts.descriptio, users.username
+        SELECT posts.id, posts.descriptio, users.username, users.id user_id
         FROM posts
         JOIN users ON posts.user_id = users.id
         WHERE posts.id = ?
     """
     results = db.query(sql, [post_id])
     return results[0] if results else None
+
+
+def update_post(post_id, descriptio):
+    sql = "UPDATE posts SET descriptio = ? WHERE id = ?"
+    db.execute(sql, [descriptio, post_id])

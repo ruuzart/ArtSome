@@ -30,10 +30,21 @@ def create_post():
     user_id = session["user_id"]
 
     posts.add_post(descriptio, user_id)
-
-
-
     return redirect("/")
+
+@app.route("/edit_post/<int:post_id>")
+def edit_post(post_id):
+    post = posts.get_post(post_id)
+    if post:
+        return render_template("edit_post.html", post=post)
+    else:
+        return "Post not found", 404
+
+@app.route("/update_post/<int:post_id>", methods=["POST"])
+def update_post(post_id):
+    descriptio = request.form["descriptio"]
+    posts.update_post(post_id, descriptio)
+    return redirect(f"/post/{post_id}")
 
 @app.route("/register")
 def register():
