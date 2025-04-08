@@ -1,17 +1,16 @@
 import db
 
-def add_post(descriptio, user_id):
-    sql = """INSERT INTO posts (descriptio, user_id)
-            VALUES (?, ?)"""
-    db.execute(sql, [descriptio, user_id])
+def add_post(title, descriptio, user_id):
+    sql = "INSERT INTO posts (title, descriptio, user_id) VALUES (?, ?, ?)"
+    db.execute(sql, [title, descriptio, user_id])
 
 def get_posts():
-    sql = "SELECT id, descriptio FROM posts ORDER BY id DESC"
+    sql = "SELECT id, title, descriptio FROM posts ORDER BY id DESC"
     return db.query(sql)
 
 def get_post(post_id):
     sql = """
-        SELECT posts.id, posts.descriptio, users.username, users.id user_id
+        SELECT posts.id, posts.title, posts.descriptio, users.username, users.id user_id
         FROM posts
         JOIN users ON posts.user_id = users.id
         WHERE posts.id = ?
@@ -20,6 +19,6 @@ def get_post(post_id):
     return results[0] if results else None
 
 
-def update_post(post_id, descriptio):
+def update_post_descriptio(post_id, descriptio):
     sql = "UPDATE posts SET descriptio = ? WHERE id = ?"
     db.execute(sql, [descriptio, post_id])

@@ -1,17 +1,21 @@
 <html>
 
 <head>
-  <title>Julkaisun muokkaus</title>
+  <title>Muokkaa julkaisua</title>
 </head>
 
 <body>
   <h1>Muokkaa julkaisua</h1>
   <form action="/update_post/{{ post.id }}" method="post">
     <p>
+      Nimi: <br />
+      <strong>{{ post.title }}</strong>
+    </p>
+    <p>
       Kuvaus: <br />
       <textarea name="descriptio" rows="10" cols="60">{{ post.descriptio }}</textarea>
     </p>
-    <input type="submit" value="Päivitä julkaisua"/>
+    <input type="submit" value="Päivitä julkaisu"/>
   </form>
 </body>
 

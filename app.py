@@ -1,7 +1,5 @@
-
 import sqlite3
-from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
@@ -26,10 +24,11 @@ def new_post():
 
 @app.route("/create_post", methods=["POST"])
 def create_post():
+    title = request.form["title"]
     descriptio = request.form["descriptio"]
     user_id = session["user_id"]
 
-    posts.add_post(descriptio, user_id)
+    posts.add_post(title, descriptio, user_id)
     return redirect("/")
 
 @app.route("/edit_post/<int:post_id>")
@@ -43,8 +42,16 @@ def edit_post(post_id):
 @app.route("/update_post/<int:post_id>", methods=["POST"])
 def update_post(post_id):
     descriptio = request.form["descriptio"]
-    posts.update_post(post_id, descriptio)
+    posts.update_post_descriptio(post_id, descriptio)
     return redirect(f"/post/{post_id}")
+
+@app.route("/remove_post/<int:post_id>")
+def remove_post(post_id):
+    post = posts.get_post(post_id)
+    if post:
+        return render_template("remove_post.html", post=post)
+    else:
+        return "Post not found", 404
 
 @app.route("/register")
 def register():
@@ -66,7 +73,6 @@ def create():
         return "VIRHE: tunnus on jo varattu"
 
     return "Tunnus luotu"
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

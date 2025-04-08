@@ -8,6 +8,7 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
     id INTEGER PRIMARY KEY,
+    title TEXT,
     descriptio TEXT,
     user_id INTEGER REFERENCES users 
 );
