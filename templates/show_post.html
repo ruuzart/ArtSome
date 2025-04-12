@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <body>
     {% if session.user_id == post.user_id %}
@@ -6,16 +7,23 @@
       <a href="/remove_post/{{ post.id }}">Delete</a>
     </p>
     {% endif %}
+
     <p>
-        <a href="/images/{{ post.id }}">Picture</a>
-          Posted by {{ post.user_id }}
-        </p>
+      <a href="/images/{{ post.id }}">Picture</a>
+      Posted by {{ post.user_id }}
+    </p>
+
     <p>
       {{ post.title }}
       {{ post.descriptio }}
     </p>
+
     <p>
+      {% if request.args.get("from") == "search" %}
+        <a href="/find_post?query={{ request.args.get('query') }}">Back to search</a>
+      {% else %}
         <a href="/">Back</a>
+      {% endif %}
     </p>
   </body>
 </html>
