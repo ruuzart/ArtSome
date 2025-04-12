@@ -1,27 +1,27 @@
 <html>
 
 <head>
-  <title>Taidesivusto</title>
+  <title>ART SITE</title>
 </head>
 
 <body>
-    <h1>Taidesivusto!</h1>
+    <h1>ART SITE!</h1>
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}
+    You are logged in as {{ session.username }}, your ID is {{ session.user_id }}
   </p>
   {% endif %}
 
   <p>
-    <a href="/login">Kirjaudu sisään</a>
-    <a href="/register">Luo tunnus</a>
-    <a href="/logout">Kirjaudu ulos</a>
+    <a href="/login">Log in</a>
+    <a href="/register">Create new account</a>
+    <a href="/logout">Log out</a>
   </p>
 
   <p>
-    <a href="/new_post">Uusi julkaisu</a>
+    <a href="/new_post">New post</a>
   </p>
-  <h2>Taidetta!</h2>
+  <h2>Art!</h2>
     <ul>
     {% for post in posts %}
     <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>

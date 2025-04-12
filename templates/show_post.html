@@ -2,20 +2,20 @@
   <body>
     {% if session.user_id == post.user_id %}
     <p>
-      <a href="/edit_post/{{ post.id }}">Muokkaa</a>
-      <a href="/remove_post/{{ post.id }}">Poista</a>
+      <a href="/edit_post/{{ post.id }}">Edit</a>
+      <a href="/remove_post/{{ post.id }}">Delete</a>
     </p>
     {% endif %}
     <p>
-        <a href="/images/{{ post.id }}">Kuva</a>
-          Julkaisija: {{ post.user_id }}
+        <a href="/images/{{ post.id }}">Picture</a>
+          Posted by {{ post.user_id }}
         </p>
     <p>
       {{ post.title }}
       {{ post.descriptio }}
     </p>
     <p>
-        <a href="/">Takaisin</a>
+        <a href="/">Back</a>
     </p>
   </body>
 </html>

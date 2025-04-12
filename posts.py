@@ -22,3 +22,7 @@ def get_post(post_id):
 def update_post_descriptio(post_id, descriptio):
     sql = "UPDATE posts SET descriptio = ? WHERE id = ?"
     db.execute(sql, [descriptio, post_id])
+
+def remove_post(post_id):
+    sql = "DELETE FROM posts WHERE id = ?"
+    db.execute(sql, [post_id])

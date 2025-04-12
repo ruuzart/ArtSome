@@ -1,13 +1,16 @@
 <html>
 
 <head>
-  <title>Julkaisun poisto</title>
+  <title>Delete post</title>
 </head>
 
 <body>
-  <h1>Poista julkaisu</h1>
-  <p>Haluatko poistaa julkaisun</p>
+  <h1>Delete post</h1>
+  <p>Post: {{ post.title }}</p>
+  <p>Do you want to delete this post?</p>
   <form action="/remove_post/{{ post.id }}" method="post">
+    <input type="submit" name="remove" value="Delete post">
+    <input type="submit" name="back" value="Go back">
   </form>
 </body>
 
