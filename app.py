@@ -43,7 +43,11 @@ def new_post():
 def create_post():
     require_login()
     title = request.form["title"]
+    if not title or len(title) > 100:
+        abort(403)
     descriptio = request.form["descriptio"]
+    if len(descriptio) > 1000:
+        abort(403)
     user_id = session["user_id"]
 
     posts.add_post(title, descriptio, user_id)
@@ -57,15 +61,11 @@ def edit_post(post_id):
         abort(404)
     if post["user_id"] != session["user_id"]:
         abort(403)
-    if post:
-        return render_template("edit_post.html", post=post)
-    else:
-        return "Post not found", 404
+    return render_template("edit_post.html", post=post)
 
 @app.route("/update_post/<int:post_id>", methods=["POST"])
 def update_post(post_id):
     require_login()
-    post_id = request.form["post_id"]
     post = posts.get_post(post_id)
     if not post:
         abort(404)
@@ -73,6 +73,9 @@ def update_post(post_id):
         abort(403)
 
     descriptio = request.form["descriptio"]
+    if len(descriptio) > 1000:
+        abort(403)
+
     posts.update_post_descriptio(post_id, descriptio)
     return redirect(f"/post/{post_id}")
 
