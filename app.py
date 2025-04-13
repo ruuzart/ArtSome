@@ -8,6 +8,10 @@ import posts
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_posts = posts.get_posts()
@@ -32,10 +36,12 @@ def show_post(post_id):
 
 @app.route("/new_post")
 def new_post():
+    require_login()
     return render_template("new_post.html")
 
 @app.route("/create_post", methods=["POST"])
 def create_post():
+    require_login()
     title = request.form["title"]
     descriptio = request.form["descriptio"]
     user_id = session["user_id"]
@@ -45,6 +51,7 @@ def create_post():
 
 @app.route("/edit_post/<int:post_id>")
 def edit_post(post_id):
+    require_login()
     post = posts.get_post(post_id)
     if not post:
         abort(404)
@@ -57,6 +64,7 @@ def edit_post(post_id):
 
 @app.route("/update_post/<int:post_id>", methods=["POST"])
 def update_post(post_id):
+    require_login()
     post_id = request.form["post_id"]
     post = posts.get_post(post_id)
     if not post:
@@ -70,6 +78,7 @@ def update_post(post_id):
 
 @app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
 def remove_post(post_id):
+    require_login()
     post = posts.get_post(post_id)
     if not post:
         abort(404)
@@ -133,6 +142,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
