@@ -53,6 +53,11 @@ def edit_post(post_id):
 
 @app.route("/update_post/<int:post_id>", methods=["POST"])
 def update_post(post_id):
+    post_id = request.form["post_id"]
+    post = posts.get_post(post_id)
+    if post["user_id"] != session["user_id"]:
+        abort(403)
+        
     descriptio = request.form["descriptio"]
     posts.update_post_descriptio(post_id, descriptio)
     return redirect(f"/post/{post_id}")
@@ -60,7 +65,7 @@ def update_post(post_id):
 @app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
 def remove_post(post_id):
     post = posts.get_post(post_id)
-    
+
     if post["user_id"] != session["user_id"]:
         abort(403)
 

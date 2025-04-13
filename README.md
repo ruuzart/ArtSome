@@ -8,3 +8,8 @@ IDEA:
 - Käyttäjä pystyy valitsemaan julkaisulle yhden tai useamman luokittelun (esim. teema, johon taideteos liittyy ja taideteoksen tyyppi (maalaus, piirrustus...))
 - Käyttäjä pystyy jättämään kommentteja muiden julkaisuihin
 
+TEHTY:
+- Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen
+- Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan omia julkaisuja (ei vielä kuvanlisäys-ominaisuutta)
+- Käyttäjä näkee sovellukseen lisätyt julkaisut
+- Käyttäjä pystyy etsimään julkaisuja hakusanalla julkaisun kuvauksen ja nimen perusteella
