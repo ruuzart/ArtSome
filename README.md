@@ -13,3 +13,4 @@ TEHTY:
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan omia julkaisuja (ei vielä kuvanlisäys-ominaisuutta)
 - Käyttäjä näkee sovellukseen lisätyt julkaisut
 - Käyttäjä pystyy etsimään julkaisuja hakusanalla julkaisun kuvauksen ja nimen perusteella
+- Sovelluksessa on käyttäjäsivut, jotka näyttävät käyttäjän lisäämät julkaisut
