@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User {{ user.username }}</title>
+</head>
+<body>
+    <h1>User {{ user.username }}</h1>
+    <p>
+        <a href="/">Back</a>
+    </p>
+    <ul>
+        {% for post in posts %}
+        <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
