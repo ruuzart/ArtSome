@@ -22,8 +22,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    posts = users.get_posts(user_id)
-    return render_template("show_user.html", user=user, posts=posts)
+    user_posts = users.get_posts(user_id)
+    return render_template("show_user.html", user=user, posts=user_posts)
 
 @app.route("/find_post", methods=["GET"])
 def find_post():
@@ -56,9 +56,10 @@ def create_post():
     descriptio = request.form["descriptio"]
     if len(descriptio) > 1000:
         abort(403)
+    tags = request.form["tags"]
     user_id = session["user_id"]
 
-    posts.add_post(title, descriptio, user_id)
+    posts.add_post(title, descriptio, tags, user_id)
     return redirect("/")
 
 @app.route("/edit_post/<int:post_id>")
@@ -83,21 +84,23 @@ def update_post(post_id):
     descriptio = request.form["descriptio"]
     if len(descriptio) > 1000:
         abort(403)
+    tags = request.form["tags"]
 
+    posts.update_post(post_id, descriptio, tags)
+    return redirect(f"/post/{post_id}")
+
+@app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
+def remove_post(post_id):
     require_login()
     post = posts.get_post(post_id)
     if not post:
         abort(404)
-
     if post["user_id"] != session["user_id"]:
         abort(403)
 
     if request.method == "GET":
-        if post:
-            return render_template("remove_post.html", post=post)
-        else:
-            return "Post not found", 404
-    if request.method == "POST":
+        return render_template("remove_post.html", post=post)
+    elif request.method == "POST":
         if "remove" in request.form:
             posts.remove_post(post_id)
             return redirect("/")

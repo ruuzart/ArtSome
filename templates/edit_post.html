@@ -16,6 +16,10 @@
       Description: <br />
       <textarea name="descriptio" rows="10" cols="60" maxlength="1000">{{ post.descriptio }}</textarea>
     </p>
+    <p>
+      Tags (separate tags with commas): <br />
+      <input type="text" name="tags" size="60" value="{{ post.tags }}" placeholder="e.g., Oil Painting, Landscape"/>
+    </p>
     <input type="submit" value="Update post"/>
   </form>
 </body>

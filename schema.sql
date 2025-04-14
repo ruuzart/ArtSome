@@ -10,5 +10,6 @@ CREATE TABLE posts (
     id INTEGER PRIMARY KEY,
     title TEXT,
     descriptio TEXT,
-    user_id INTEGER REFERENCES users 
+    user_id INTEGER REFERENCES users,
+    tags TEXT
 );
