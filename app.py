@@ -1,6 +1,5 @@
 import sqlite3
 from flask import Flask, abort, redirect, render_template, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
 import posts
@@ -85,11 +84,6 @@ def update_post(post_id):
     if len(descriptio) > 1000:
         abort(403)
 
-    posts.update_post_descriptio(post_id, descriptio)
-    return redirect(f"/post/{post_id}")
-
-@app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
-def remove_post(post_id):
     require_login()
     post = posts.get_post(post_id)
     if not post:
@@ -120,16 +114,12 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
-    password_hash = generate_password_hash(password1)
-
+        return "ERROR: passwords do not match"
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
-
-    return "Tunnus luotu"
+        return "ERROR: username taken"
+    return "Account successfully created"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -140,17 +130,13 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         
-        sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])[0]
-        user_id = result["id"]
-        password_hash = result["password_hash"]
-
-        if check_password_hash(password_hash, password):
+        user_id = users.check_login(username, password)
+        if user_id:
             session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            return "ERROR: wrong username or password"
 
 @app.route("/logout")
 def logout():
