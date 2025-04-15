@@ -9,7 +9,7 @@
   <h1>ART SITE!</h1>
   {% if session.username %}
   <p>
-    You are logged in as {{ session.username }}, your ID is {{ session.user_id }}
+    You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, your ID is {{ session.user_id }}
   </p>
   <p>
     <a href="/logout">Log out</a><br>
