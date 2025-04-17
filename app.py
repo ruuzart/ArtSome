@@ -40,7 +40,8 @@ def show_post(post_id):
     post = posts.get_post(post_id)
     if not post:
         abort(404)
-    return render_template("show_post.html", post=post)
+    comments = posts.get_comments(post_id)
+    return render_template("show_post.html", post=post, comments=comments)
 
 @app.route("/new_post")
 def new_post():
@@ -61,6 +62,19 @@ def create_post():
 
     posts.add_post(title, descriptio, tags, user_id)
     return redirect("/")
+
+@app.route("/post/create_comment", methods=["POST"])
+def create_comment():
+    require_login()
+    post_id = int(request.form["post_id"])
+    post = posts.get_post(post_id)
+    if not post:
+        abort(403)
+    comment = request.form["comment"]
+    user_id = int(session["user_id"])
+
+    posts.add_comment(post_id, user_id, comment)
+    return redirect(f"/post/{post_id}")
 
 @app.route("/edit_post/<int:post_id>")
 def edit_post(post_id):

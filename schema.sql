@@ -11,3 +11,10 @@ CREATE TABLE posts (
     user_id INTEGER REFERENCES users,
     tags TEXT
 );
+
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    comment TEXT NOT NULL
+);

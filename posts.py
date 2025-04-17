@@ -33,3 +33,18 @@ def find_posts(query):
             ORDER BY id DESC"""
     like = "%" + query + "%"
     return db.query(sql, [like])
+
+def add_comment(post_id, user_id, comment):
+    sql = "INSERT INTO comments (post_id, user_id, comment) VALUES (?, ?, ?)"
+    db.execute(sql, [post_id, user_id, comment])
+
+def get_comments(post_id):
+    sql = """
+            SELECT comments.comment, users.id as user_id, users.username
+            FROM comments
+            LEFT JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = ?
+            ORDER BY comments.id
+            """
+
+    return db.query(sql, [post_id])
