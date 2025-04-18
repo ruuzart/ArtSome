@@ -4,6 +4,7 @@ import config
 import db
 import posts
 import users
+import base64
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -16,6 +17,12 @@ def require_login():
 def index():
     all_posts = posts.get_posts()
     return render_template("index.html", posts=all_posts)
+
+@app.template_filter('to_base64')
+def to_base64(data):
+    if data is None:
+        return ''
+    return base64.b64encode(data).decode('utf-8')
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -60,7 +67,14 @@ def create_post():
     tags = request.form["tags"]
     user_id = session["user_id"]
 
-    posts.add_post(title, descriptio, tags, user_id)
+    if 'image' not in request.files:
+        abort(403)
+    image = request.files['image']
+    if image.filename == '':
+        abort(403)
+    image_data = image.read()
+
+    posts.add_post(title, descriptio, tags, user_id, image_data)
     return redirect("/")
 
 @app.route("/post/create_comment", methods=["POST"])
@@ -71,6 +85,8 @@ def create_comment():
     if not post:
         abort(403)
     comment = request.form["comment"]
+    if len(comment) > 200:
+        abort(403)
     user_id = int(session["user_id"])
 
     posts.add_comment(post_id, user_id, comment)

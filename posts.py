@@ -1,16 +1,16 @@
 import db
 
-def add_post(title, descriptio, tags, user_id):
-    sql = "INSERT INTO posts (title, descriptio, tags, user_id) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [title, descriptio, tags, user_id])
+def add_post(title, descriptio, tags, user_id, image_data):
+    sql = "INSERT INTO posts (title, descriptio, tags, user_id, image) VALUES (?, ?, ?, ?, ?)"
+    db.execute(sql, [title, descriptio, tags, user_id, image_data])
 
 def get_posts():
-    sql = "SELECT id, title, descriptio, tags FROM posts ORDER BY id DESC"
+    sql = "SELECT id, title, descriptio, tags, image FROM posts ORDER BY id DESC"
     return db.query(sql)
 
 def get_post(post_id):
     sql = """
-        SELECT posts.id, posts.title, posts.descriptio, posts.tags, users.username, users.id user_id
+        SELECT posts.id, posts.title, posts.descriptio, posts.tags, posts.image, users.username, users.id user_id
         FROM posts
         JOIN users ON posts.user_id = users.id
         WHERE posts.id = ?
@@ -44,7 +44,7 @@ def get_comments(post_id):
             FROM comments
             LEFT JOIN users ON comments.user_id = users.id
             WHERE comments.post_id = ?
-            ORDER BY comments.id
+            ORDER BY comments.id DESC
             """
 
     return db.query(sql, [post_id])

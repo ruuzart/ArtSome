@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      img.post-image {
+        max-width: 30%;
+        height: auto;
+      }
+    </style>
+  </head>
   <body>
+    {% if post.image %}
+    <img class="post-image" src="data:image/jpeg;base64,{{ post.image|to_base64 }}" alt="{{ post.title }}" />
+    {% endif %}
+
     <h1>{{ post.title }}</h1>
 
     {% if session.user_id == post.user_id %}
@@ -11,7 +23,6 @@
     {% endif %}
 
     <p>
-      <a href="/images/{{ post.id }}">Picture</a>
       Posted by <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
     </p>
 
@@ -37,7 +48,7 @@
 
     <form action="create_comment" method="post">
       <label for="comment">Comment:</label><br />
-      <input type="text" id="comment" name="comment" required />
+      <textarea id="comment" name="comment" rows="4" cols="50" maxlength="200" required></textarea><br />
       <input type="hidden" name="post_id" value="{{ post.id }}">
       <input type="submit" value="Send" />
     </form>
