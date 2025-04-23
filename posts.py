@@ -27,7 +27,7 @@ def remove_post(post_id):
     db.execute(sql, [post_id])
 
 def find_posts(query):
-    sql = """SELECT id, title, descriptio, tags
+    sql = """SELECT id, title, descriptio, tags, image
             FROM posts
             WHERE tags LIKE ?
             ORDER BY id DESC"""
