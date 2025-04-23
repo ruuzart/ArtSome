@@ -4,9 +4,25 @@
 <head>
   <title>Search by tag</title>
   <style>
+    ul.posts {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      list-style-type: none;
+      justify-content: flex-start; /* Align items to the start */
+    }
+
+    ul.posts li {
+      flex: 0 1 21%; /* Fixed width for each item */
+      box-sizing: border-box;
+      margin: 10px;
+      max-width: 21%; /* Ensure items don't exceed this width */
+    }
+
     img.thumbnail {
-      max-width: 100px;
-      height: auto;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       display: block;
       margin-bottom: 10px;
     }
@@ -29,9 +45,10 @@
 
   {% if query %}
   <h2>Results</h2>
-  <ul>
+  <ul class="posts">
     {% for post in results %}
-    <li><a href="/post/{{ post.id }}?from=search&query={{ query }}">{{ post.title }}</a>
+    <li>
+      <a href="/post/{{ post.id }}">{{ post.title }}</a>
       {% if post.image %}
       <img class="thumbnail" src="data:image/jpeg;base64,{{ post.image|to_base64 }}" alt="{{ post.title }}" />
       {% endif %}

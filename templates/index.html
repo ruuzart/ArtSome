@@ -4,9 +4,25 @@
 <head>
   <title>ART SITE</title>
   <style>
+    ul.posts {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      list-style-type: none;
+      justify-content: flex-start; /* Align items to the start */
+    }
+
+    ul.posts li {
+      flex: 0 1 21%; /* Fixed width for each item */
+      box-sizing: border-box;
+      margin: 10px;
+      max-width: 21%; /* Ensure items don't exceed this width */
+    }
+
     img.thumbnail {
-      max-width: 100px;
-      height: auto;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       display: block;
       margin-bottom: 10px;
     }
@@ -15,6 +31,11 @@
 
 <body>
   <h1>ART SITE!</h1>
+  <p>
+    {% if session.username %}
+    {% endif %}
+  </p>
+
   {% if session.username %}
   <p>
     You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, your ID is {{ session.user_id }}
@@ -33,7 +54,7 @@
   {% endif %}
 
   <h2>Art!</h2>
-  <ul>
+  <ul class="posts">
     {% for post in posts %}
     <li>
       <a href="/post/{{ post.id }}">{{ post.title }}</a>
