@@ -144,15 +144,19 @@ def register():
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
+    if username == "":
+        abort(403)
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+    if password1 == "":
+        abort(403)
     if password1 != password2:
         return "ERROR: passwords do not match"
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
         return "ERROR: username taken"
-    return "Account successfully created"
+    return "Account created"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -161,7 +165,11 @@ def login():
 
     if request.method == "POST":
         username = request.form["username"]
+        if username == "":
+            abort(403)
         password = request.form["password"]
+        if password == "":
+            abort(403)
         
         user_id = users.check_login(username, password)
         if user_id:
