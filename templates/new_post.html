@@ -10,8 +10,13 @@
   <form action="/create_post" method="post" enctype="multipart/form-data">
     <p>
       Image: <br />
-      <input type="file" name="image" accept="image/*" required/>
+      <input type="file" name="image" accept=".jpg, .png" required/>
     </p>
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
     <p>
       Title: <br />
       <input type="text" name="title" size="60" maxlength="100" required/>

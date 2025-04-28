@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, abort, redirect, render_template, request, session
+from flask import Flask, abort, redirect, render_template, flash, request, session
 import config
 import db
 import posts
@@ -72,6 +72,9 @@ def create_post():
     image = request.files['image']
     if image.filename == '':
         abort(403)
+    if not (image.filename.endswith(".jpg") or image.filename.endswith(".png")):
+        flash("ERROR: wrong file format")
+        return redirect("/new_post")
     image_data = image.read()
 
     posts.add_post(title, descriptio, tags, user_id, image_data)
