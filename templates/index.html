@@ -31,25 +31,22 @@
 
 <body>
   <h1>ART SITE!</h1>
-  <p>
     {% if session.username %}
+    <p>
+      You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
+    </p>
     {% endif %}
-  </p>
-
-  {% if session.username %}
+    {% if session.username %}
   <p>
-    You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, your ID is {{ session.user_id }}
-  </p>
-  <p>
-    <a href="/logout">Log out</a><br>
-    <a href="/new_post">New post</a><br>
-    <a href="/find_post">Search by tag</a><br>
+    <a href="/logout">Log out</a> |
+    <a href="/new_post">New post</a> |
+    <a href="/find_post">Search by tag</a>
   </p>
   {% else %}
   <p>
-    <a href="/login">Log in</a><br>
-    <a href="/register">Create new account</a><br>
-    <a href="/find_post">Search by tag</a><br>
+    <a href="/login">Log in</a> |
+    <a href="/register">Create new account</a> |
+    <a href="/find_post">Search by tag</a>
   </p>
   {% endif %}
 
