@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
+{% block title %}ArtSome{% endblock %}
+
+{% block content %}
   <title>Search by tag</title>
-  <style>
-    ul.posts {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0;
-      list-style-type: none;
-      justify-content: flex-start; /* Align items to the start */
-    }
-
-    ul.posts li {
-      flex: 0 1 21%; /* Fixed width for each item */
-      box-sizing: border-box;
-      margin: 10px;
-      max-width: 21%; /* Ensure items don't exceed this width */
-    }
-
-    img.thumbnail {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      margin-bottom: 10px;
-    }
-  </style>
 </head>
 
 <body>
@@ -56,6 +33,5 @@
     {% endfor %}
   </ul>
   {% endif %}
-</body>
 
-</html>
+  {% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
+</head>
+
+<body>
+  <div class="header">
+      {% if session.username %}
+    <p>
+      <a href="/">Home</a> |
+      <a href="/logout">Log out</a> |
+      <a href="/new_post">New post</a> |
+      <a href="/find_post">Search by tag</a>
+    </p>
+    {% else %}
+    <p>
+      <a href="/">Home</a> |
+      <a href="/login">Log in</a> |
+      <a href="/register">Create new account</a> |
+      <a href="/find_post">Search by tag</a>
+    {% endif %}
+  </p>
+  {% block content %}{% endblock %}
+
+
+</body>
+
+</html>

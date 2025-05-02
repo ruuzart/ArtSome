@@ -1,66 +1,27 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>ArtSome</title>
-  <style>
-    ul.posts {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0;
-      list-style-type: none;
-      justify-content: flex-start;
-    }
+{% block title %}ArtSome{% endblock %}
 
-    ul.posts li {
-      flex: 0 1 21%;
-      box-sizing: border-box;
-      margin: 10px;
-      max-width: 21%;
-    }
+{% block content %}
 
-    img.thumbnail {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
 
-<body>
-  <h1>ArtSome!</h1>
-    {% if session.username %}
-    <p>
-      You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
-    </p>
+<h1>ArtSome</h1>
+
+{% if session.username %}
+<p>
+  You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
+</p>
+{% endif %}
+
+<h2>Art!</h2>
+<ul class="posts">
+  {% for post in posts %}
+  <li>
+    <a href="/post/{{ post.id }}">{{ post.title }}</a>
+    {% if post.image %}
+    <img class="thumbnail" src="data:image/jpeg;base64,{{ post.image|to_base64 }}" alt="{{ post.title }}" />
     {% endif %}
-    {% if session.username %}
-  <p>
-    <a href="/logout">Log out</a> |
-    <a href="/new_post">New post</a> |
-    <a href="/find_post">Search by tag</a>
-  </p>
-  {% else %}
-  <p>
-    <a href="/login">Log in</a> |
-    <a href="/register">Create new account</a> |
-    <a href="/find_post">Search by tag</a>
-  </p>
-  {% endif %}
-
-  <h2>Art!</h2>
-  <ul class="posts">
-    {% for post in posts %}
-    <li>
-      <a href="/post/{{ post.id }}">{{ post.title }}</a>
-      {% if post.image %}
-      <img class="thumbnail" src="data:image/jpeg;base64,{{ post.image|to_base64 }}" alt="{{ post.title }}" />
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-</body>
-
-</html>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
