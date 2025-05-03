@@ -9,9 +9,7 @@
 </head>
 <body>
     <h1>User {{ user.username }}</h1>
-    <p>
-        <a href="/">Back</a>
-    </p>
+    {{ posts | count }} posts
     <ul class="posts">
         {% for post in posts %}
         <li>
@@ -22,6 +20,9 @@
         </li>
         {% endfor %}
       </ul>
+      <p>
+        <a href="/">Back</a>
+    </p>
 </body>
 
 {% endblock %}
