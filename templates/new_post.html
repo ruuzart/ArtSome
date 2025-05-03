@@ -32,6 +32,7 @@
       Tags (separate tags with commas): <br />
       <input type="text" name="tags" size="60" placeholder="e.g., Oil Painting, Landscape"/>
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Create post"/>
   </form>
 </body>

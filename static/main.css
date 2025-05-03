@@ -1,3 +1,19 @@
+@font-face {
+    font-family: "Noto_Sans_Mono";
+    src: url("fonts/Noto_Sans_Mono/NotoSansMono-VariableFont_wdth,wght.ttf");
+}
+
+
+body {
+    margin: auto;
+    max-width: 50em;
+    font-family: "Noto_Sans_Mono";
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    background-image: url("backgrounds/background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+  }
 
 ul.posts {
     display: flex;
@@ -20,5 +36,10 @@ ul.posts {
     object-fit: cover;
     display: block;
     margin-top: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
   }
+
+  a {
+    color: white;
+    text-shadow: none;
+}
