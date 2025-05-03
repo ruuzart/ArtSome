@@ -46,5 +46,4 @@ def get_comments(post_id):
             WHERE comments.post_id = ?
             ORDER BY comments.id DESC
             """
-
     return db.query(sql, [post_id])

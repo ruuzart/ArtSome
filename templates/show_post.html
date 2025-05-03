@@ -18,17 +18,6 @@
 
     <h1>{{ post.title }}</h1>
 
-    {% if session.user_id == post.user_id %}
-    <p>
-      <a href="/edit_post/{{ post.id }}">Edit</a>
-      <a href="/remove_post/{{ post.id }}">Delete</a>
-    </p>
-    {% endif %}
-
-    <p>
-      Posted by <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
-    </p>
-
     <p>{{ post.descriptio }}</p>
 
     <p>
@@ -42,6 +31,17 @@
       {% endif %}
     </p>
 
+    Posted by <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
+    
+    {% if session.user_id == post.user_id %}
+    <p>
+      <a href="/edit_post/{{ post.id }}">Edit</a>
+      <a href="/remove_post/{{ post.id }}">Delete</a>
+    </p>
+    {% endif %}
+    <p>
+
+    </p>
     <h2>Comments</h2>
     <ul>
       {% for comment in comments %}

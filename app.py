@@ -1,11 +1,12 @@
-import sqlite3
-from flask import Flask, abort, redirect, render_template, flash, request, session
-import config
-import db
-import posts
-import users
 import base64
 import secrets
+import sqlite3
+
+from flask import Flask, abort, flash, redirect, render_template, request, session
+
+import config
+import posts
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -25,11 +26,11 @@ def index():
     all_posts = posts.get_posts()
     return render_template("index.html", posts=all_posts)
 
-@app.template_filter('to_base64')
+@app.template_filter("to_base64")
 def to_base64(data):
     if data is None:
-        return ''
-    return base64.b64encode(data).decode('utf-8')
+        return ""
+    return base64.b64encode(data).decode("utf-8")
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -75,10 +76,10 @@ def create_post():
     tags = request.form["tags"]
     user_id = session["user_id"]
 
-    if 'image' not in request.files:
+    if "image" not in request.files:
         abort(403)
-    image = request.files['image']
-    if image.filename == '':
+    image = request.files["image"]
+    if image.filename == "":
         abort(403)
     if not (image.filename.endswith(".jpg") or image.filename.endswith(".png")):
         flash("ERROR: wrong file format")
@@ -143,13 +144,12 @@ def remove_post(post_id):
 
     if request.method == "GET":
         return render_template("remove_post.html", post=post)
-    elif request.method == "POST":
+    if request.method == "POST":
         check_csrf()
         if "remove" in request.form:
             posts.remove_post(post_id)
             return redirect("/")
-        else:
-            return redirect(f"/post/{post_id}")
+        return redirect(f"/post/{post_id}")
 
 @app.route("/register")
 def register():
@@ -184,15 +184,14 @@ def login():
         password = request.form["password"]
         if password == "":
             abort(403)
-        
+
         user_id = users.check_login(username, password)
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            return "ERROR: wrong username or password"
+        return "ERROR: wrong username or password"
 
 @app.route("/logout")
 def logout():
