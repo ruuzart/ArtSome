@@ -11,27 +11,32 @@ import users
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+# Ensure the user is logged in; abort if not
 def require_login():
     if "user_id" not in session:
         abort(403)
 
+# Validate CSRF token; abort if invalid
 def check_csrf():
     if "csrf_token" not in request.form:
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
+# Route for the main page, displaying all posts
 @app.route("/")
 def index():
     all_posts = posts.get_posts()
     return render_template("index.html", posts=all_posts)
 
+# Template filter to convert data to base64 encoding
 @app.template_filter("to_base64")
 def to_base64(data):
     if data is None:
         return ""
     return base64.b64encode(data).decode("utf-8")
 
+# Route to display a specific user's profile and their posts
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
     user = users.get_user(user_id)
@@ -40,6 +45,7 @@ def show_user(user_id):
     user_posts = users.get_posts(user_id)
     return render_template("show_user.html", user=user, posts=user_posts)
 
+# Route to search for posts based on a query
 @app.route("/find_post", methods=["GET"])
 def find_post():
     query = request.args.get("query")
@@ -50,6 +56,7 @@ def find_post():
         results = []
     return render_template("find_post.html", query=query, results=results)
 
+# Route to display a specific post and its comments
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     post = posts.get_post(post_id)
@@ -58,11 +65,13 @@ def show_post(post_id):
     comments = posts.get_comments(post_id)
     return render_template("show_post.html", post=post, comments=comments)
 
+# Route to show the form for creating a new post
 @app.route("/new_post")
 def new_post():
     require_login()
     return render_template("new_post.html")
 
+# Route to handle the creation of a new post
 @app.route("/create_post", methods=["POST"])
 def create_post():
     require_login()
@@ -89,6 +98,7 @@ def create_post():
     posts.add_post(title, descriptio, tags, user_id, image_data)
     return redirect("/")
 
+# Route to handle adding a comment to a post
 @app.route("/post/create_comment", methods=["POST"])
 def create_comment():
     require_login()
@@ -105,6 +115,7 @@ def create_comment():
     posts.add_comment(post_id, user_id, comment)
     return redirect(f"/post/{post_id}")
 
+# Route to show the form for editing a post
 @app.route("/edit_post/<int:post_id>")
 def edit_post(post_id):
     require_login()
@@ -115,6 +126,7 @@ def edit_post(post_id):
         abort(403)
     return render_template("edit_post.html", post=post)
 
+# Route to handle updating a post
 @app.route("/update_post/<int:post_id>", methods=["POST"])
 def update_post(post_id):
     require_login()
@@ -133,6 +145,7 @@ def update_post(post_id):
     posts.update_post(post_id, descriptio, tags)
     return redirect(f"/post/{post_id}")
 
+# Route to handle removing a post
 @app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
 def remove_post(post_id):
     require_login()
@@ -151,10 +164,12 @@ def remove_post(post_id):
             return redirect("/")
         return redirect(f"/post/{post_id}")
 
+# Route to display the registration form
 @app.route("/register")
 def register():
     return render_template("register.html")
 
+# Route to handle user registration
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
@@ -172,6 +187,7 @@ def create():
         return "ERROR: username taken"
     return "Account created"
 
+# Route to handle user login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -193,6 +209,7 @@ def login():
             return redirect("/")
         return "ERROR: wrong username or password"
 
+# Route to handle user logout
 @app.route("/logout")
 def logout():
     if "user_id" in session:
