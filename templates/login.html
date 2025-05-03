@@ -9,14 +9,7 @@
 </head>
 
 <body>
-  {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-  {% else %}
+  <h1>Log in</h1>
   <form action="/login" method="post">
     <p>
       Username: <br />
@@ -29,7 +22,6 @@
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Log in" />
   </form>
-  {% endif %}
 </body>
 
 {% endblock %}
