@@ -18,7 +18,7 @@
 
     <h1>{{ post.title }}</h1>
 
-    <p>{{ post.descriptio }}</p>
+    <p>{{ post.descriptio | show_lines }}</p>
 
     <p>
       Tags:
@@ -45,7 +45,7 @@
     <h2>Comments</h2>
     <ul>
       {% for comment in comments %}
-      <li>{{ comment.comment }}, <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a></li>
+      <li>{{ comment.comment | show_lines }}, <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a></li>
       {% endfor %}
     </ul>
 
@@ -53,6 +53,7 @@
       <label for="comment">Comment:</label><br />
       <textarea id="comment" name="comment" rows="4" cols="50" maxlength="200" required></textarea><br />
       <input type="hidden" name="post_id" value="{{ post.id }}">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       <input type="submit" value="Send" />
     </form>
 

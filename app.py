@@ -1,6 +1,7 @@
 import base64
 import secrets
 import sqlite3
+import markupsafe
 
 from flask import Flask, abort, flash, redirect, render_template, request, session
 
@@ -22,6 +23,12 @@ def check_csrf():
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
+        
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 # Route for the main page, displaying all posts
 @app.route("/")
