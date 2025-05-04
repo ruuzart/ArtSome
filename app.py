@@ -23,7 +23,8 @@ def check_csrf():
         abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
-        
+
+# Show line breaks
 @app.template_filter()
 def show_lines(content):
     content = str(markupsafe.escape(content))
